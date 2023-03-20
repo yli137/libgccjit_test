@@ -47,6 +47,8 @@ void create_func( gcc_jit_context *ctxt, gcc_jit_function *func,
     ptrdiff_t diff = 0;
     for( int i = 0; i < num; i++ ){
 
+	/* pointer arithmetic
+	   have type mismatching error */
         gcc_jit_context_new_binary_op( ctxt, NULL,
             GCC_JIT_BINARY_OP_PLUS,
             char_ptr_type,
@@ -59,6 +61,7 @@ void create_func( gcc_jit_context *ctxt, gcc_jit_function *func,
             gcc_jit_lvalue_as_rvalue( src_val ), 
             gcc_jit_context_new_rvalue_from_long( ctxt, sizet_type, disp[i] ) );
 
+	/* alternative way to get address of ptr[index] */
         dst_val = gcc_jit_lvalue_get_address( 
                       gcc_jit_context_new_array_access( ctxt, NULL,
                           gcc_jit_lvalue_as_rvalue( dst_val ),
